@@ -2,11 +2,11 @@
     "DebugMode": true,
     "HostAddress": "localhost:8080",
     "RealHostAddress": "http://localhost:8080",
-    "CsrfSecret": "32bit key hes string",
-    "CookiefSecret": "32bit key hes string",
+    "CsrfSecret": "32 byte key hes string",
+    "CookiefSecret": "32 byte key hes string",
     "GoogleClientId": "???",
     "GoogleClientSecret": "???",
     "AdminGoogleId": "???",
     "AdminRegName": "???",
-    "UserIdSalt": "32bit key hes string"
+    "UserIdSalt": "32 byte key hes string",
 }
