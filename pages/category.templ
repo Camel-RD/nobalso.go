@@ -1,0 +1,159 @@
+package pages
+import (
+    "main/models"
+    "strconv"
+    "fmt"
+)
+
+func StrPlusInt(s string, k int) string{
+    return s + strconv.Itoa(k)
+}
+
+templ Category(model *models.CatPageVM){
+    <div class="statementlistcontainer">
+        if len(model.ParentNames) > 0 {
+            @category_parentlist(model.ParentNames, 1)
+        }
+        if len(model.Category.Children) > 0 {
+            for _, cat := range model.Category.Children {
+                @category_statements(cat)
+            }
+        }
+        else if (len(model.Category.Statements) > 0) {
+            @category_statements(model.Category)
+        }
+    </div>    
+}
+
+templ category_parentlist(parentnames []*models.CatPageParentName, level int) {
+    {{cp := parentnames[level-1]}}
+    <div class={StrPlusInt("catd", level)}>
+        if cp.HasLink {
+            <p class={StrPlusInt("catp", level)}>
+                <a href={StrPlusInt("/category/", cp.CategoryId)}>{cp.Name}</a>
+            </p>
+        } else {
+            <p class={StrPlusInt("catp", level)}>{cp.Name}</p>
+        }
+        if level < len(parentnames) {
+            @category_parentlist(parentnames, level + 1)
+        }
+    </div>
+}
+
+templ category_statements(cat *models.CatPageCatVM){
+	if len(cat.Statements) == 0{
+        return
+    } 
+    <div class="stmtc">
+        <p class="stmtcp1">
+            <a href={StrPlusInt("/category/", cat.Id)}>{cat.Name}</a>
+        </p>
+        for _, stm := range cat.Statements {
+            <div class="stmtd">
+                <p class="stmtp">
+                    {stm.Name}
+                    <a href= {fmt.Sprintf("/category/%d/%d", cat.Id, stm.Id)}>#</a>
+                </p>
+                <div class="votesdiv1">
+                    <div class="votesdiv2">
+                        if stm.UserVotedYes {
+                            <button class="commonbutton commonbutton2" data-id={stm.Id} data-tp="1">
+                                <img src="/assets/img/yes3.png" />
+                                <span class="votecountgreen">{stm.VotesCountYes}</span>
+                            </button>
+                        } else {
+                            <button class="commonbutton" data-id={stm.Id} data-tp="1">
+                                <img src="/assets/img/yes.png" />
+                                <span class="votecountgreen">{stm.VotesCountYes}</span>
+                            </button>
+                        }
+                        if stm.UserVotedNo {
+                            <button class="commonbutton commonbutton2" data-id={stm.Id} data-tp="2">
+                                <img src="/assets/img/no3.png" />
+                                <span class="votecountred">{stm.VotesCountNo}</span>
+                            </button>
+                        } else {
+                            <button class="commonbutton" data-id={stm.Id} data-tp="2">
+                                <img src="/assets/img/no.png" />
+                                <span class="votecountred">{stm.VotesCountNo}</span>
+                            </button>
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>    
+}
+
+templ Category_script(){
+	{{csrf := ctx.Value("gorilla.csrf.Token").(string)}}
+    <script>
+		let buttons = document.querySelectorAll('.commonbutton');
+		buttons.forEach(button => {
+			button.addEventListener('click', function(ev) {
+				const el = ev.currentTarget;
+				const id = el.dataset.id;
+				const tp = el.dataset.tp;
+				//alert(`clicked button id=${id} tp=${tp}`);
+				//$('#wait-modal').modal('show');
+				PostClick(el, id, tp);
+			});
+		});
+
+		function PostClick(el, id, tp){
+			//alert(`id=${id}`);
+			const token = "{{csrf}}";
+			const data = {"Id": Number(id), "Tp": Number(tp)};
+
+			fetch('?handler=click', {
+				method: 'post',
+				headers: {
+					"Content-type": "application/json",
+					"X-CSRF-Token" : token
+				},
+				body: JSON.stringify(data)
+			}).then(response => {
+				//alert(`response ${JSON.stringify(response)}`);
+				return response.json();
+			}).then(result =>{
+				//alert(`response countyes=${result.countyes} markyes=${result.markyes}`);
+				if (result.CountYes != undefined && result.CountYes > -1){
+					UpdateButton(id, 1, result.CountYes, result.MarkYes);
+					UpdateButton(id, 2, result.CountNo, result.MarkNo);
+				}
+			}).catch(error =>{
+				alert(`error= ${error}`);
+			});
+		};
+
+		function UpdateButton(id, tp, ct, mark){
+			let btns = document.querySelectorAll(`.commonbutton[data-id="${id}"][data-tp="${tp}"]`);
+			btns.forEach(btn => {
+				let span = btn.querySelector('span');
+				span.innerHTML = ct;
+				let im = btn.querySelector('img');
+				if(mark == true){
+					btn.classList.add('commonbutton2');
+					if (tp == 1){
+						im.src = '/assets/img/yes3.png';
+					}
+					else{
+						im.src = '/assets/img/no3.png';
+					}
+				}
+				else{
+					btn.classList.remove('commonbutton2');
+					if(tp == 1){
+						im.src = '/assets/img/yes.png';
+					}
+					else{
+						im.src = '/assets/img/no.png';
+					}
+				}
+			});
+		};
+
+	</script>    
+}

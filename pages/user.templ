@@ -1,0 +1,21 @@
+package pages
+
+templ User(){
+    <div class="statementlistcontainer">
+        <div class="stmtc">
+            <p class="stmtcp1">
+                Šeit tev ir iespēja izdzēsties no sistēmas. 
+                Nospiežot pogu "Dzēst manus datus", tiks izdzēsti tavi balsojumi 
+                šajā lapā un tavs konts.
+            </p>
+            <br/>
+            <form class="form-inline" method="post">
+                @CSRF_field()
+                <button type="submit" class="commonbutton">
+                    <img src="/assets/img/no.png" />
+                    <span class="votecountgreen">Dzēst manus datus</span>
+                </button>
+            </form>
+        </div>
+    </div>
+}

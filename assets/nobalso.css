@@ -1,0 +1,342 @@
+﻿:root {
+    --common-background-color: rgb(40,40,40);
+    --main-background-color: rgb(51,51,51);
+    --bubble-background-color: rgb(81,81,81);
+    --main-color1: white;
+    --main-color2: white;
+}
+.root2 {
+    --common-background-color: rgb(28,32,41);
+    --main-background-color: #1f1f1f;
+    --main-color: rgb(240,240,240);
+}
+
+.navo {
+    background-color: var(--main-background-color);
+    border-color: var(--main-background-color) !important;
+}
+
+li .nav-link {
+    color: white;
+    font-size: 1.2rem;
+    transition: color .3s ease-in-out
+}
+    li .nav-link:hover {
+        color: wheat;
+    }
+    li .nav-link:active {
+        color: lightpink;
+    }
+
+.navbar-brand2 {
+    font-size: 1.4rem;
+    color: white !important;
+    transition: color .3s ease-in-out !important;
+}
+
+    .navbar-brand2:hover {
+        color: wheat !important;
+    }
+
+body {
+    color: var(--main-color1);
+    background-color: var(--common-background-color);
+}
+a {
+    color: white;
+    text-decoration-line:none;
+}
+a:hover {
+    color:wheat;
+    text-decoration:underline;
+}
+
+.a2 {
+    color: black;
+    text-decoration-line: none;
+}
+
+h1 {
+    width: 100%;
+    border-bottom-style: none;
+    border-bottom-color: var(--main-color2);
+    border-bottom-width: 2px;
+}
+
+.fullbox {
+    max-width: 1250px;
+    width: 100%;
+    height: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.loginbox {
+    background-color: var(--main-background-color);
+    color: var(--main-color2);
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--main-color2);
+    border-radius: 20px;
+    min-height: 350px;
+    min-width: 400px;
+    padding: 20px;
+}
+
+.errormsg{
+    color:yellow;
+}
+
+.catlistcontainer {
+    width: 600px;
+}
+
+.catd1 {
+    min-height: 100px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border-style: solid;
+    border-radius: 20px;
+    border-color: var(--main-background-color);
+    border-width: 1px;
+    padding: 30px;
+    color: var(--main-color2);
+    background-color: var(--main-background-color);
+}
+.catd2 {
+    margin-left: 50px;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+.catd3 {
+    margin-left: 50px;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+}
+.catd4 {
+    margin-left: 50px;
+}
+.catp1 {
+    font-size: 1.6rem;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    border-bottom-style: solid;
+    border-bottom-color: var(--main-color2);
+    border-bottom-width: 1px;
+}
+.catp2 {
+    font-size: 1.4rem;
+    line-height: 1em;
+    padding: 0;
+    margin: 0;
+}
+.catp3 {
+    font-size: 1.2rem;
+    padding: 0;
+    margin: 0;
+}
+.catp4 {
+    font-size: 0.9rem;
+    padding: 0;
+    margin: 0;
+}
+
+.statementlistcontainer {
+    width: 600px;
+    min-height: 600px;
+    margin-left: 50px;
+}
+
+.stmtc {
+    min-height: 100px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    border-style: solid;
+    border-radius: 20px;
+    border-color: var(--main-background-color);
+    border-width: 1px;
+    padding: 30px;
+    color: var(--main-color2);
+    background-color: var(--main-background-color);
+}
+
+.stmtt {
+    padding: 0px;
+}
+
+.stmtd {
+    min-height: 100px;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    border-style: solid;
+    border-radius: 20px;
+    border-color: var(--bubble-background-color);
+    border-width: 1px;
+    padding: 20px;
+    color: var(--main-color1);
+    background-color: var(--bubble-background-color);
+}
+.stmtp {
+    padding: 0;
+    margin: 0;
+    font-size: 1rem;
+}
+.stmtcp1 {
+    padding: 0;
+    margin: 0;
+    font-size: 1.5rem;
+}
+.votecountred {
+    color: black;
+    padding-left: 0px;
+    padding-right: 10px;
+}
+
+.votecountgreen {
+    color: black;
+    padding-left: 0px;
+    padding-right: 10px;
+}
+
+.votesdiv1 {
+    text-align: right;
+    display: flex;
+	justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.votesdiv2 {
+    margin-left: auto;
+    margin-top: 1rem;
+    text-align: right;
+    box-sizing: border-box;
+    display: inline;
+}
+
+.commonbutton {
+    background-color: rgb(180,180,180);
+    border-radius: 10px;
+    border-style: none;
+    border-width: 1px;
+    padding: 5px;
+    margin-bottom: 0px;
+    border-style: solid;
+    border-color: var(--bubble-background-color);
+    vertical-align:central;
+}
+    .commonbutton:hover {
+        background-color: rgb(200,200,200);
+        border-color: var(--main-background-color);
+    }
+
+    .commonbutton:active {
+        background-color: rgb(230,230,230);
+    }
+
+.commonbutton2 {
+    background-color: #FFD696;
+}
+    .commonbutton2:hover {
+        background-color: #FFBE4F;
+    }
+
+    .commonbutton2:active {
+        background-color: #FFA500;
+    }
+
+
+.subnav{
+    width: 100%;
+}
+
+.subnav nav {
+    background-color: #333;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+}
+
+    /* Style for the list container */
+    .subnav nav ul {
+        width: 100%;
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex; /* Creates horizontal layout */
+        flex-direction: row;
+        align-items: end;
+        justify-content: end;
+    }
+
+        /* Style for each list item */
+        .subnav nav ul li {
+            display: inline-block;
+            font-size: 1.2rem;
+        }
+
+            /* Style for the links */
+            .subnav nav ul li a {
+                display: block;
+                color: white;
+                text-align: center;
+                padding: 10px 20px;
+                text-decoration: none;
+                transition: background-color 0.3s;
+            }
+                .subnav nav ul li a[data-tp='x'] {
+                    color: hotpink;
+                }
+                /* Hover effect for links */
+                .subnav nav ul li a:hover {
+                    color: wheat;
+                }
+
+
+.container-user {
+    min-height: 600px;
+    width:100%;
+}
+
+.toolstrip {
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+.toolstrip2 {
+    margin-left: auto;
+    margin-top: 1rem;
+    text-align: right;
+    box-sizing: border-box;
+    display: inline;
+}
+
+.commonmodal {
+    color: white;
+}
+    .commonmodal .modal-content {
+        color: white;
+        background-color: var(--main-background-color);
+    }
+
+    .commonmodal textarea {
+        color: white;
+        background-color: var(--bubble-background-color) !important;
+    }
+
+    .commonmodal textarea:focus {
+        color: white;
+        background-color: var(--bubble-background-color) !important;
+    }
+

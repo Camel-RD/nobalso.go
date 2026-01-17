@@ -1,0 +1,38 @@
+package pages
+import (
+    "main/models"
+)
+
+templ Register(model *models.RegisterPageVM, ses SessionData){
+    <div class="fullbox">
+        <div class="loginbox">
+            <h1>Reģistrēties</h1>
+            <br/>
+            if ses.IsAuthenticated {
+                <p>Lietotājs {ses.UserName} ir jau pieslēdzies.</p>
+            } else {
+                if model.Msg != "Ok" {
+                    <form method="post">
+                        @CSRF_field()
+                        <div class="mb-3">
+                            <label class="form-label">Lietotāja vārds::</label>
+                            <input class="form-control" name="Name" value={model.Name} />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Parole:</label>
+                            <input class="form-control" name="Psw" value={model.Psw}/>
+                        </div>
+                        <div class="mb-3">
+                            <button class="btn btn-primary">Reģistrēties</button>
+                        </div>
+                    </form>
+                    if model.Msg != "" {
+                        <span class="errormsg">*{model.Msg}</span>
+                    }
+                } else {
+                    <span>lietotājs {ses.UserName} veiksmīgi piereģistrēts.</span>
+                }
+            }
+        </div>
+    </div>
+}

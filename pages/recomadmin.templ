@@ -1,0 +1,119 @@
+package pages
+import (
+    "main/models"
+)
+
+templ RecomAdmin(model []models.RecomListVM, ses SessionData){
+    <div class="statementlistcontainer">
+    for i := range model {
+        @RecomAdmin_List(&model[i])
+    }
+    </div>
+    @RecomAdmin_modal(ses)
+}
+
+templ RecomAdmin_List(model *models.RecomListVM){
+    <div class="stmtc">
+        <p class="stmtcp1">{model.UserName}</p>
+        for i := range model.RecomList {
+            @RecomAdmin_item(&model.RecomList[i])      
+        }
+    </div>
+}
+
+templ RecomAdmin_item(model *models.RecomVM){
+    <div class="stmtd">
+        <p class="stmtp">
+            {model.Text}
+        </p>
+        <div class="toolstrip">
+            <div class="toolstrip2">
+                <button class="commonbutton" data-id={model.Id} data-tp="edit" data-tx={model.Text}>
+                    <img src="/assets/img/edit.png" />
+                    <span class="votecountgreen"></span>
+                </button>
+                <button class="commonbutton" data-id={model.Id} data-tp="delete" data-tx="">
+                    <img src="/assets/img/no.png" />
+                    <span class="votecountgreen"></span>
+                </button>
+            </div>
+        </div>
+    </div>    
+}
+
+templ RecomAdmin_modal(ses SessionData){
+    <div class="modal fade commonmodal" id="op-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header commonmodal">
+                    <h5 class="modal-title">Pievienot vai rediģēt ieteikumu</h5>
+                    <button type="button" class="btn-close"
+                            data-bs-dismiss="modal" aria-label="Aizvērt"></button>
+                </div>
+                <div class="modal-body">
+
+                    <form id="recom-op-form" method="post">
+                        @CSRF_field()
+                        <input id="form-id" type="hidden" name="Id" />
+                        <input id="form-op" type="hidden" name="Op" />
+                        <input type="hidden" name="UserNameId" value={ses.UserId} />
+                        <div class="form-group">
+                            <label class="control-label">Ieteikuma apraksts:</label>
+                            <textarea id="form-tx" class="form-control" rows="4" name="Text"></textarea>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer commonmodal">
+                    <button type="button" class="btn btn-success" data-bs-success="modal" id="btn-ok">
+                        Ok
+                    </button>				
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Aizvērt
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>    
+}
+
+templ RecomAdmin_script(){
+	<script>
+		let buttons = document.querySelectorAll('.commonbutton');
+		buttons.forEach(button => {
+			button.addEventListener('click', function(ev) {
+				const el = ev.currentTarget;
+				const id = el.dataset.id;
+				const tp = el.dataset.tp;
+				const tx = el.dataset.tx;
+				DoClick(el, id, tp, tx);
+			});
+		});
+
+		let btnok = document.getElementById('btn-ok');
+		btnok.addEventListener('click', function(ev) {
+				const form = document.getElementById('recom-op-form');
+				form.requestSubmit();
+			});
+
+		function DoClick(el, id, tp, tx){
+			//alert(`id=${id}`);
+            document.getElementById('form-id').value = id;
+            document.getElementById('form-op').value = tp;
+            document.getElementById('form-tx').value = tx;
+
+			if(tp == 'delete'){
+				const form = document.getElementById('recom-op-form');
+				form.requestSubmit();
+				return;
+			}
+
+            var modal = document.getElementById('op-modal');
+            var bsmodal = new bootstrap.Modal(modal);
+            bsmodal.show();					
+            modal.classList.add('commonmodal');
+
+		};
+
+	</script>
+}

@@ -1,0 +1,36 @@
+package pages
+
+import U "main/utils"
+
+templ Layout_user(ses SessionData, contents templ.Component){
+    {{
+        vt := ses.ViewData["UserView"].(string)
+        tp1 := U.StrIf(vt == "wipe", "x", "")
+        tp2 := U.StrIf(vt == "recom", "x", "")
+        tp3 := U.StrIf(vt == "recomadmin", "x", "")
+    }}
+    <div class="subnav">
+        <nav>
+            <ul>
+                <li><a href="user" 
+                    data-tp={tp1}>
+                    Tavi dati
+                </a></li>
+                <li><a href="recom"
+                    data-tp={tp2}>
+                    Tavi ieteikumi
+                </a></li>
+                if ses.IsAdmin {
+                    <li><a href="recomadmin"
+                        data-tp={tp3}>
+                        Ieteikumi (admin)
+                    </a></li>
+                }
+            </ul>
+        </nav>
+    </div>
+
+    <div class="container-user">
+        @contents
+    </div>
+}

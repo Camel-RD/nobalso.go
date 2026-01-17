@@ -1,0 +1,28 @@
+package pages
+
+templ MLogin(ses SessionData){
+    <div class="fullbox">
+        <div class="loginbox">
+            <br/>
+            <h1 class="text-center mb-4">
+                Pieslēgties
+            </h1>
+            <br />
+            <div class="text-center">
+                if ses.IsAuthenticated {
+                    <p>Lietotājs {ses.UserName} ir jau pieslēdzies.</p>
+                } else {
+                    <a href="/glogin"
+                        class="btn btn-outline-success rounded-pill text-white">
+                            <i class="fab fa-google me-2"></i>Pieslēgties ar Google
+                    </a>
+                    <br /><br /><br />
+                    <a href="/login"
+                        class="btn btn-outline-success rounded-pill text-white">
+                        <i class="fab fa-google me-2"></i>Pieslēgties ar paroli
+                    </a>
+                }
+            </div>
+        </div>
+    </div>
+}

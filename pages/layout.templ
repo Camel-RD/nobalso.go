@@ -1,0 +1,88 @@
+package pages
+
+templ Layout(ses SessionData, contents templ.Component, scripts ...templ.Component) {
+    <!DOCTYPE html>
+    <html lang="lv">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Nobalso!</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/assets/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="/assets/nobalso.css"/>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    </head>
+    <body>
+        @Layout_header(ses)
+        <div class="container">
+            <main role="main" class="pb-3">
+                @contents
+            </main>
+        </div>
+        @Layout_footer()
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+        for _,scr := range scripts{
+            @scr
+        }
+    </body>
+    </html>
+}
+
+templ Layout_header(ses SessionData){
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom text-light
+                box-shadow mb-3 navo">
+            <div class="container">
+                <a class="navbar-brand navbar-brand2" href="/">Nobalso!</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+                    data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                    </ul>
+                    @Layout_login(ses)
+                </div>
+            </div>
+        </nav>
+    </header>
+}
+
+templ Layout_login(ses SessionData){
+    <ul class="navbar-nav">
+    if ses.IsAuthenticated {
+        <li class="nav-item">
+            <a href="/user" class="nav-link">sveiks, {ses.UserName}!</a>
+        </li>
+        <li class="nav-item">
+            <form class="form-inline" action="/logout" method="post">
+                @CSRF_field()
+                <button class="nav-link btn btn-link">Iziet</button>
+            </form>
+        </li>
+    } else {
+        <li class="nav-item">
+            <a class="nav-link" href="/register">Reģistrēties</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/mlogin">Pieslēgties</a>
+        </li>
+    }
+    </ul>
+}
+
+templ Layout_footer(){
+    <footer class="border-top border-white footer text-white">
+        <div class="container">
+            <span>&copy; 2025 - Nobalso! - </span>
+            <a class="text-white" href="/privacy">Privātuma politika</a>
+            <span> - </span>
+            <a class="text-white" href="/about">Par šo vietni</a>
+        </div>
+    </footer>
+}
+
+templ CSRF_field(){
+    <input type="hidden" name="gorilla.csrf.Token" value={ ctx.Value("gorilla.csrf.Token").(string) }/>
+}
